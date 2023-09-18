@@ -35,7 +35,6 @@ function countdown() {
       isPaused = true;
       travail.style.color = "green";
       pause.style.color = "white";
-      timerForm.style.display = "none";
     }
   } else {
     elem.innerHTML = `${minutes}:${secondes}`;
@@ -51,11 +50,9 @@ boutonReset.addEventListener("click", () => {
 let timerForm = document.getElementById("timer-form");
 let workDurationInput = document.getElementById("work-duration");
 let breakDurationInput = document.getElementById("break-duration");
-let boutonMettreAJour = document.getElementById("mettreAJour");
 
 // Écouteur d'événement pour le formulaire
-timerForm.addEventListener("click", function (event) {
-  event.preventDefault(); // Empêche le rechargement de la page
+timerForm.addEventListener("change", () => {
 
   // Récupère les valeurs saisies par l'utilisateur
   let newWorkDuration = parseInt(workDurationInput.value, 10) * 60; // Convertit en secondes
@@ -65,6 +62,9 @@ timerForm.addEventListener("click", function (event) {
   workTime = newWorkDuration;
   timeLeft = newWorkDuration;
   timePause = newBreakDuration;
+  if(timePause == 0){
+    timePause = 300;
+  }
   isPaused = true;
   temps = newWorkDuration / 60;
   if(temps/10 >= 1){
@@ -72,13 +72,13 @@ timerForm.addEventListener("click", function (event) {
   } else {
     temps = '0' + temps;
   }
-
+  if(temps == 0 && isPaused == true){
+    temps = 25;
+  } else if(temps == 0 && isPaused == false){
+    temps = 5;
+  }
   // Réinitialise l'affichage
   elem.innerHTML = `${temps}:00`;
-
-  boutonMettreAJour.addEventListener("click", () => {
-    timerForm.style.display = "none";
-  });
 
   localStorage.setItem("workDuration", newWorkDuration);
   localStorage.setItem("breakDuration", newBreakDuration);
@@ -86,7 +86,9 @@ timerForm.addEventListener("click", function (event) {
 
 window.addEventListener("load", function () {
   let storedWorkDuration = localStorage.getItem("workDuration");
+  workTime = storedWorkDuration;
   let storedBreakDuration = localStorage.getItem("breakDuration");
+  timePause = storedBreakDuration;
 
   if (storedWorkDuration && storedBreakDuration) {
     workTime = parseInt(storedWorkDuration, 10);
@@ -94,12 +96,18 @@ window.addEventListener("load", function () {
 
     // Met à jour l'affichage ou les variables appropriées ici
     temps = workTime / 60; // Met à jour la variable 'temps' en minutes
-
+    
     // Met à jour l'affichage du formulaire avec les valeurs récupérées
     workDurationInput.value = temps;
     breakDurationInput.value = timePause / 60;
 
     // Met à jour l'affichage du timer (par exemple, si le timer est actuellement visible)
+    if(temps/10 >= 1){
+        temps = temps;
+    } else {
+        temps = '0' + temps;
+    }
+
     elem.innerHTML = `${temps}:00`;
   }
 });
