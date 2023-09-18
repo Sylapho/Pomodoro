@@ -1,0 +1,51 @@
+html {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.8px;
+    min-height: 100vh;
+    color: #d8e9ef;
+    background-image: linear-gradient(-20deg, #200122 0%, #6f0000 100%);
+    background-size: cover;
+}
+
+.panel{
+    margin-bottom: 5%;
+    text-align: center;
+    
+}
+
+.container{
+    text-align: center;
+}
+
+.circle {
+    text-align: center;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    background-color: green;
+    border: 6px solid black;
+    display: inline-block;
+    margin-bottom: 2%;
+}
+
+#chrono{
+    padding: 32%;
+    text-align: center;
+}
+
+h1 {
+    margin: 0 auto 10px auto;
+    color: #d8e9ef;
+    text-align: center;
+}
+
+p {
+    margin: 0;
+}
+
+button{
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 70%, #ffffff 99%);      
+    display: inline-block;
+}
