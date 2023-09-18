@@ -51,4 +51,39 @@ boutonReset.addEventListener('click', ()=>{
     location.reload();
 });
 
+// Références aux éléments du formulaire
+const timerForm = document.getElementById('timer-form');
+const workDurationInput = document.getElementById('work-duration');
+const breakDurationInput = document.getElementById('break-duration');
+let boutonMettreAJour = document.getElementById('mettreAJour')
 
+// Écouteur d'événement pour le formulaire
+timerForm.addEventListener('click', function(event) {
+    event.preventDefault(); // Empêche le rechargement de la page
+    
+    // Récupère les valeurs saisies par l'utilisateur
+    const newWorkDuration = parseInt(workDurationInput.value, 10) * 60; // Convertit en secondes
+    const newBreakDuration = parseInt(breakDurationInput.value, 10) * 60; // Convertit en secondes
+    
+    // Met à jour les durées de travail et de pause
+    workTime = newWorkDuration;
+    timeLeft = newWorkDuration;
+    timePause = newBreakDuration;
+    isPaused = true;
+    temps = newWorkDuration / 60;
+    temps = temps;
+    
+    // Réinitialise l'affichage
+    elem.innerHTML = `${temps}:00`;
+    
+    boutonMettreAJour.addEventListener('click', ()=>{
+        timerForm.style.display = 'none';
+    })
+    // Affiche le bouton "Démarrer"
+    button.style.display = 'inline-block';
+});
+
+
+boutonReset.addEventListener('click', ()=>{
+    location.reload();
+});
