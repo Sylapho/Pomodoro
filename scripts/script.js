@@ -18,7 +18,7 @@ elem.innerHTML = '25:00';
 button.addEventListener('click', ()=>{
     button.style.display = 'none';
     boutonReset.style.display = 'inline-block'
-    travail.style.color = 'green';
+    travail.style.color = 'white';
     let timerId = setInterval(countdown, 1000);
 });
 
@@ -31,14 +31,14 @@ function countdown() {
         if(isPaused == true){
             isPaused = false;
             timeLeft = timePause;
-            travail.style.color = 'white';
-            pause.style.color = 'green';
+            travail.style.color = 'black';
+            pause.style.color = 'white';
 
         } else {
             timeLeft = workTime;
             isPaused = true;
-            travail.style.color = 'green';
-            pause.style.color = 'white';
+            travail.style.color = 'white';
+            pause.style.color = 'black';
         }
         
     } else {
