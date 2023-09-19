@@ -1,33 +1,36 @@
-let storedWorkDuration = localStorage.getItem("workDuration");
-let workTime = 1500;
-workTime = storedWorkDuration;
-let timeLeft = workTime;
-let timePause = 300;
-let isPaused = true;
-let temps = workTime / 60;
-let timeMinutePause = timePause / 60;
+let dureeTravailStockee = localStorage.getItem("workDuration");
+let dureePauseStockee = localStorage.getItem("pauseDuration");
+let tempsDeTravail = 1500;
+tempsDeTravail = dureeTravailStockee;
+let tempsRestant = tempsDeTravail;
+let tempsDePause = 300;
+tempsDePause = dureePauseStockee;
+let enPause = true;
+let temps = tempsDeTravail / 60;
+let tempsEnMinutePause = tempsDePause / 60;
 
 let travail = document.getElementById("travail");
 let pause = document.getElementById("pause");
-let elem = document.getElementById("chrono");
-let button = document.getElementById("debut");
+let chrono = document.getElementById("chrono");
+let boutonDepart = document.getElementById("debut");
 let boutonReset = document.getElementById("reset");
 let tempsTimerTravail = document.getElementById('tempsTimerTravail');
 let tempsTimerPause = document.getElementById('tempsTimerPause');
 let tempsPause = document.getElementById('tempsPause');
 let tempsTravail = document.getElementById('tempsTravail');
-let pause3 = document.getElementById('tempsPauseAffichage');
+let tempsPauseAffichage = document.getElementById('tempsPauseAffichage');
+let minutes = parseInt(tempsRestant / 60, 10);
+let secondes = parseInt(tempsRestant % 60, 10);
+
+tempsTimerPause.style.value = `${tempsDePause}`;
 boutonReset.style.display = "none";
-let minutes = parseInt(timeLeft / 60, 10);
-let secondes = parseInt(timeLeft % 60, 10);
 minutes = minutes < 10 ? "0" + minutes : minutes;
 secondes = secondes < 10 ? "0" + secondes : secondes;
-elem.innerHTML = `${minutes}:${secondes}`;
-pause3.innerText = timeMinutePause + ' minutes';
+chrono.innerHTML = `${minutes}:${secondes}`;
+tempsPauseAffichage.innerText = tempsEnMinutePause + ' minutes';
 
-
-button.addEventListener("click", () => {
-  button.style.display = "none";
+boutonDepart.addEventListener("click", () => {
+  boutonDepart.style.display = "none";
   boutonReset.style.display = "inline-block";
   travail.style.color = "green";
   let timerId = setInterval(countdown, 1000);
@@ -35,81 +38,81 @@ button.addEventListener("click", () => {
   tempsTravail.style.display = "none";
 });
 
+// Permet de maintenir l'interval et de faire des boucles de temps (25min / 5min de base)
 function countdown() {
-  let minutes = parseInt(timeLeft / 60, 10);
-  let secondes = parseInt(timeLeft % 60, 10);
+  let minutes = parseInt(tempsRestant / 60, 10);
+  let secondes = parseInt(tempsRestant % 60, 10);
   minutes = minutes < 10 ? "0" + minutes : minutes;
   secondes = secondes < 10 ? "0" + secondes : secondes;
-  if (timeLeft <= -1) {
-    if (isPaused == true) {
-      isPaused = false;
-      timeLeft = timePause;
+  if (tempsRestant <= -1) {
+    if (enPause == true) { // Si pause 
+      enPause = false;
+      tempsRestant = tempsDePause; // cela rajoute le temps de la pause (5 min de base) à l'interval
       travail.style.color = "black";
       pause.style.color = "green";
     } else {
-      timeLeft = workTime;
-      isPaused = true;
+      tempsRestant = tempsDeTravail; // Rajoute le temps de traavil à l'interval
+      enPause = true;
       travail.style.color = "green";
       pause.style.color = "black";
     }
   } else {
-    elem.innerHTML = `${minutes}:${secondes}`;
-    timeLeft--;
+    chrono.innerHTML = `${minutes}:${secondes}`;
+    tempsRestant--;
   }
 }
 
+// Permet de modifier le temps de travail
 tempsTimerTravail.addEventListener('input', () => {
-  let newWorkDuration = parseInt(tempsTimerTravail.value, 10) * 60; // Convertit en secondes
+  let nouvelleDureeTravail = parseInt(tempsTimerTravail.value, 10) * 60; // Convertit en secondes
 
-  workTime = newWorkDuration;
-  timeLeft = newWorkDuration;
-  isPaused = true;
-  temps = newWorkDuration / 60;
+  tempsDeTravail = nouvelleDureeTravail;
+  tempsRestant = nouvelleDureeTravail;
+  enPause = true;
+  temps = nouvelleDureeTravail / 60;
   if (temps / 10 >= 1) {
     temps = temps;
   } else {
     temps = '0' + temps;
   }
   // Réinitialise l'affichage
-  elem.innerHTML = `${temps}:00`;
-  localStorage.setItem('workDuration', workTime);
+  chrono.innerHTML = `${temps}:00`;
+  localStorage.setItem('workDuration', tempsDeTravail);
 });
-
+// Permet de modifier le temps de pause 
 tempsTimerPause.addEventListener('input', () => {
-  let newPauseDuration = parseInt(tempsTimerPause.value, 10) * 60;
-  timePause = newPauseDuration;
-  timeMinutePause = newPauseDuration / 60;
-  localStorage.setItem('pauseDuration', timePause);
-  pause3.innerText = timeMinutePause + ' minutes';
+  let nouvelleDureePause = parseInt(tempsTimerPause.value, 10) * 60;
+  tempsDePause = nouvelleDureePause;
+  tempsEnMinutePause = nouvelleDureePause / 60;
+  tempsPauseAffichage.innerText = tempsEnMinutePause + ' minutes';
+  localStorage.setItem('pauseDuration', tempsDePause);
 });
 
-
-
+// Permet de sauvegarder les choix faits avec une réiniatilisation
 window.addEventListener("load", () => {
-  let storedWorkDuration = localStorage.getItem("workDuration");
-  workTime = storedWorkDuration;
-  let storedPauseDuration = localStorage.getItem('pauseDuration');
-  if (storedWorkDuration && storedPauseDuration) {
-    workTime = parseInt(storedWorkDuration, 10);
-    timePause = parseInt(storedPauseDuration, 10);
+  let dureeTravailStockee = localStorage.getItem("workDuration"); 
+  tempsDeTravail = dureeTravailStockee;
+  let dureePauseStockee = localStorage.getItem('pauseDuration');
+  if (dureeTravailStockee && dureePauseStockee) {
+    tempsDeTravail = parseInt(dureeTravailStockee, 10);
+    tempsDePause = parseInt(dureePauseStockee, 10);
 
-    // Met à jour l'affichage ou les variables appropriées ici
-    temps = workTime / 60; // Met à jour la variable 'temps' en minutes
+    temps = tempsDeTravail / 60; 
 
-    // Met à jour l'affichage du formulaire avec les valeurs récupérées
     tempsTimerTravail.value = temps;
-    tempsTimerPause.value = timePause / 60;
+    tempsTimerPause.value = tempsEnMinutePause / 60;
+    console.log(tempsEnMinutePause);
 
-    // Met à jour l'affichage du timer (par exemple, si le timer est actuellement visible)
     if (temps / 10 >= 1) {
       temps = temps;
     } else {
       temps = '0' + temps;
     }
 
-    elem.innerHTML = `${temps}:00`;
+    chrono.innerHTML = `${temps}:00`;
   }
 })
+// Relance la page afin de réiniatiliser le timer
 boutonReset.addEventListener("click", () => {
   location.reload();
 });
