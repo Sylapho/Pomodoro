@@ -5,6 +5,7 @@ let timeLeft = workTime;
 let timePause = 300;
 let isPaused = true;
 let temps = workTime / 60;
+let timeMinutePause = timePause / 60;
 
 let travail = document.getElementById("travail");
 let pause = document.getElementById("pause");
@@ -15,13 +16,15 @@ let tempsTimerTravail = document.getElementById('tempsTimerTravail');
 let tempsTimerPause = document.getElementById('tempsTimerPause');
 let tempsPause = document.getElementById('tempsPause');
 let tempsTravail = document.getElementById('tempsTravail');
-let pause3 = document.getElementById('tempsPause');
+let pause3 = document.getElementById('tempsPauseAffichage');
 boutonReset.style.display = "none";
 let minutes = parseInt(timeLeft / 60, 10);
 let secondes = parseInt(timeLeft % 60, 10);
 minutes = minutes < 10 ? "0" + minutes : minutes;
 secondes = secondes < 10 ? "0" + secondes : secondes;
 elem.innerHTML = `${minutes}:${secondes}`;
+pause3.innerText = timeMinutePause + ' minutes';
+
 
 button.addEventListener("click", () => {
   button.style.display = "none";
@@ -41,13 +44,13 @@ function countdown() {
     if (isPaused == true) {
       isPaused = false;
       timeLeft = timePause;
-      travail.style.color = "white";
+      travail.style.color = "black";
       pause.style.color = "green";
     } else {
       timeLeft = workTime;
       isPaused = true;
       travail.style.color = "green";
-      pause.style.color = "white";
+      pause.style.color = "black";
     }
   } else {
     elem.innerHTML = `${minutes}:${secondes}`;
@@ -62,7 +65,7 @@ tempsTimerTravail.addEventListener('input', () => {
   timeLeft = newWorkDuration;
   isPaused = true;
   temps = newWorkDuration / 60;
-  if(temps/10 >= 1){
+  if (temps / 10 >= 1) {
     temps = temps;
   } else {
     temps = '0' + temps;
@@ -75,34 +78,38 @@ tempsTimerTravail.addEventListener('input', () => {
 tempsTimerPause.addEventListener('input', () => {
   let newPauseDuration = parseInt(tempsTimerPause.value, 10) * 60;
   timePause = newPauseDuration;
+  timeMinutePause = newPauseDuration / 60;
   localStorage.setItem('pauseDuration', timePause);
+  pause3.innerText = timeMinutePause + ' minutes';
 });
 
-window.addEventListener("load", ()=>{
+
+
+window.addEventListener("load", () => {
   let storedWorkDuration = localStorage.getItem("workDuration");
-  console.log(storedWorkDuration);
   workTime = storedWorkDuration;
-  if (storedWorkDuration){ //&& storedBreakDuration) {
+  let storedPauseDuration = localStorage.getItem('pauseDuration');
+  if (storedWorkDuration && storedPauseDuration) {
     workTime = parseInt(storedWorkDuration, 10);
-    //timePause = parseInt(storedBreakDuration, 10);
+    timePause = parseInt(storedPauseDuration, 10);
 
     // Met à jour l'affichage ou les variables appropriées ici
     temps = workTime / 60; // Met à jour la variable 'temps' en minutes
-    
+
     // Met à jour l'affichage du formulaire avec les valeurs récupérées
     tempsTimerTravail.value = temps;
-    // breakDurationInput.value = timePause / 60;
+    tempsTimerPause.value = timePause / 60;
 
     // Met à jour l'affichage du timer (par exemple, si le timer est actuellement visible)
-    if(temps/10 >= 1){
-        temps = temps;
+    if (temps / 10 >= 1) {
+      temps = temps;
     } else {
-        temps = '0' + temps;
+      temps = '0' + temps;
     }
 
     elem.innerHTML = `${temps}:00`;
   }
 })
-boutonReset.addEventListener("click", () => {  
+boutonReset.addEventListener("click", () => {
   location.reload();
 });
