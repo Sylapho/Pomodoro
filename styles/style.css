@@ -1,21 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
 html {
     font-family: 'Fira Sans', sans-serif;
     font-size: 20px;
     letter-spacing: 0.8px;
     min-height: 100vh;
     color: #d8e9ef;
-    background: linear-gradient(157deg, rgba(255,196,0,1) 0%,  rgba(213,14,14,1) 100%);
+    background: linear-gradient(157deg, rgba(255, 196, 0, 1) 0%, rgba(213, 14, 14, 1) 100%);
     background-size: cover;
-    color:#000000;
+    color: #000000;
 }
 
-.panel{
+.panel {
     margin-bottom: 5%;
     text-align: center;
-    
+
 }
 
-.container{
+.container {
     text-align: center;
 }
 
@@ -24,13 +26,13 @@ html {
     width: 250px;
     height: 250px;
     border-radius: 50%;
-    border: 6px solid rgb(0, 0, 0); 
+    border: 6px solid rgb(0, 0, 0);
     display: inline-block;
     margin-bottom: 2%;
     background: none;
 }
 
-#chrono{
+#chrono {
     text-align: center;
     line-height: 250px;
     font-size: 250%;
@@ -43,7 +45,7 @@ h1 {
     font-size: 175%;
 }
 
-h2{
+h2 {
     margin: 0 auto 10px auto;
     color: #000000;
     text-align: center;
@@ -56,15 +58,14 @@ p {
 }
 
 button {
-  background-color: #000000;
-  border: 1px solid rgba(27, 31, 35, .15);
-  border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  padding: 6px 16px;
-  
+    background-color: #000000;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 16px;
 }
